@@ -1,0 +1,40 @@
+apply plugin: 'java-library'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'application'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.9'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+def version = [
+	junit: '4.12',
+	slf4j: '1.7.25',
+	logback: '1.2.3',
+	netty: '4.1.29.Final',
+	commonsLang: '3.7',
+	jacksonDatabind: '2.9.5'
+];
+
+dependencies {
+	api "org.slf4j:slf4j-api:${version.slf4j}"
+	api "ch.qos.logback:logback-classic:${version.logback}"
+	api "io.netty:netty-all:${version.netty}"
+	api "org.apache.commons:commons-lang3:${version.commonsLang}"
+	api "com.fasterxml.jackson.core:jackson-databind:${version.jacksonDatabind}"
+	api "com.fasterxml.jackson.core:jackson-databind:${version.jacksonDatabind}"
+	
+	testImplementation "junit:junit:${version.junit}"
+}
+
+jar {
+	baseName = 'filp-server'
+	version = '0.0.1'
+}
+
