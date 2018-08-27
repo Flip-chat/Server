@@ -1,5 +1,7 @@
 package com.wonchiyoung.filp.server.initializer;
 
+import com.wonchiyoung.filp.server.handler.BasicChatServerHandler;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -17,6 +19,8 @@ public class StringChannelInitializer extends ChannelInitializer<SocketChannel> 
 		pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
 		pipeline.addLast(new StringDecoder());
 		pipeline.addLast(new StringEncoder());
+		
+		pipeline.addLast(new BasicChatServerHandler());
 	}
 
 }
