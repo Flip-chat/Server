@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<!-- 
+================================================================================
+/**
+ * logback config apply order
+ * 1. logback-test.xml
+ * 2. logback.groovy
+ * 3. logback.xml
+ */
+================================================================================
+/**
+ * log level
+ * - TRACE : TRACE + DEBUG + INFO + WARN + ERROR
+ * - DEBUG : DEBUG + INFO + WARN + ERROR
+ * - INFO  : INFO + WARN + ERROR
+ * - WARN  : WARN + ERROR
+ * - ERROR : ERROR
+ * - OFF   : 
+ */
+================================================================================
+ * configuration menual : [https://logback.qos.ch/manual/configuration.html]
+================================================================================
+ -->
+<configuration debug="true" scan="true" scanPeriod="1 minutes">
+
+	<!-- ROOT log level -->
+	<property name="ROOT_LOG_LEVEL" value="TRACE" />
+	
+	<!-- Custom log level -->
+	<property name="CUSTOM_LOG_LEVEL" value="TRACE" />
+	
+	<!-- Config log level -->
+	<property name="CONFIG_LOG_LEVEL" value="TRACE" />
+	
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>[%d{MM-dd HH:mm:ss.SSS}] %-5level %-38logger{38} \(%5line\) - %msg%n</Pattern>
+		</layout>
+	</appender>
+	
+	
+	<logger name="com.wonchiyoung.flip.server" level="${CUSTOM_LOG_LEVEL}" />
+	
+	<root level="${ROOT_LOG_LEVEL}">
+		<appender-ref ref="STDOUT" />
+	</root>
+	
+</configuration>
