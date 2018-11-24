@@ -1,10 +1,17 @@
-apply plugin: 'java-library'
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
+	}
+}
+
+apply plugin: 'java'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'application'
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.9'
-}
+apply plugin: "com.github.johnrengelman.shadow"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -13,7 +20,7 @@ repositories {
 	mavenCentral()
 }
 
-def version = [
+def libVersion = [
 	junit: '4.12',
 	slf4j: '1.7.25',
 	logback: '1.2.3',
@@ -23,18 +30,31 @@ def version = [
 ];
 
 dependencies {
-	api "org.slf4j:slf4j-api:${version.slf4j}"
-	api "ch.qos.logback:logback-classic:${version.logback}"
-	api "io.netty:netty-all:${version.netty}"
-	api "org.apache.commons:commons-lang3:${version.commonsLang}"
-	api "com.fasterxml.jackson.core:jackson-databind:${version.jacksonDatabind}"
-	api "com.fasterxml.jackson.core:jackson-databind:${version.jacksonDatabind}"
+	implementation "org.slf4j:slf4j-api:${libVersion.slf4j}"
+	implementation "ch.qos.logback:logback-classic:${libVersion.logback}"
+	implementation "io.netty:netty-all:${libVersion.netty}"
+	implementation "org.apache.commons:commons-lang3:${libVersion.commonsLang}"
+	implementation "com.fasterxml.jackson.core:jackson-databind:${libVersion.jacksonDatabind}"
+	implementation "com.fasterxml.jackson.core:jackson-databind:${libVersion.jacksonDatabind}"
 	
-	testImplementation "junit:junit:${version.junit}"
+	testImplementation "junit:junit:${libVersion.junit}"
 }
 
+mainClassName = 'com.flipchat.server.FlipChatServer'
+version = '0.0.1' + '-SNAPSHOT'
+
 jar {
-	baseName = 'filp-server'
-	version = '0.0.1'
+	finalizedBy shadowJar
+	//baseName = project.name
+	manifest {
+		attributes 'Main-Class' : mainClassName,
+				'Implementation-Title' : project.name,
+				'Implementation-Version' : version
+	}
+	from {
+		configurations.compile.collect {
+			it.isDirectory() ? it : zipTree(it)
+		}
+	}
 }
 
