@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import com.flipchat.server.initializer.StringChannelInitializer;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -17,34 +19,30 @@ public class FlipChatServer {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	private final int PORT;
-	
-	public FlipChatServer(int port) {
-		this.PORT = port;
-	}
-	
 	public static void main(String[] args) {
-		System.out.println("Flip chat server is starting..");
 		try {
-			new FlipChatServer(8000).run();
+			int port = Integer.parseInt(args[0]);
+			new FlipChatServer().run(port);
 		} catch (Exception e) {
-			System.out.println("An error occurred while running the chat server.");
-			e.printStackTrace();
+			System.err.println("it needs a port parameter");
 		}
 	}
 	
-	public void run() throws Exception {
-		EventLoopGroup bossGroup = new NioEventLoopGroup();
+	public void run(int port) throws Exception {
+		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		
 		try {
 			ServerBootstrap bootstrap = new ServerBootstrap();
+			bootstrap.option(ChannelOption.SO_BACKLOG, 1024);
 			bootstrap.group(bossGroup, workerGroup)
 					.channel(NioServerSocketChannel.class)
 					.handler(new LoggingHandler(LogLevel.TRACE))
 					.childHandler(new StringChannelInitializer());
 			
-			bootstrap.bind(PORT).sync().channel().closeFuture().sync();
+			Channel channel = bootstrap.bind(port).sync().channel();
+			
+			channel.closeFuture().sync();
 		} catch (Exception e) {
 			log.error(ExceptionUtils.getStackTrace(e));
 		} finally {
