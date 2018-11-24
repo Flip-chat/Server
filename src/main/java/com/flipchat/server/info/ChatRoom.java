@@ -1,4 +1,4 @@
-package com.wonchiyoung.filp.server.info;
+package com.flipchat.server.info;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

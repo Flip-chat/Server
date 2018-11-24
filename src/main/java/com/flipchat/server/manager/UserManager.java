@@ -1,4 +1,4 @@
-package com.wonchiyoung.filp.server.manager;
+package com.flipchat.server.manager;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wonchiyoung.filp.server.env.SupportDevice;
-import com.wonchiyoung.filp.server.info.ChatUser;
+import com.flipchat.server.env.SupportDevice;
+import com.flipchat.server.info.ChatUser;
 
 public class UserManager {
 

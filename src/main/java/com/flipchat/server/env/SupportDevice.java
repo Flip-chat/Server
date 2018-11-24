@@ -1,4 +1,4 @@
-package com.wonchiyoung.filp.server.env;
+package com.flipchat.server.env;
 
 public enum SupportDevice {
 	WEB, APP

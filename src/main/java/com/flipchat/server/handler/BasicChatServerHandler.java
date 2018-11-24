@@ -1,13 +1,13 @@
-package com.wonchiyoung.filp.server.handler;
+package com.flipchat.server.handler;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wonchiyoung.filp.server.env.SupportDevice;
-import com.wonchiyoung.filp.server.info.ChatRoom;
-import com.wonchiyoung.filp.server.info.ChatUser;
-import com.wonchiyoung.filp.server.manager.RoomManager;
-import com.wonchiyoung.filp.server.manager.UserManager;
+import com.flipchat.server.env.SupportDevice;
+import com.flipchat.server.info.ChatRoom;
+import com.flipchat.server.info.ChatUser;
+import com.flipchat.server.manager.RoomManager;
+import com.flipchat.server.manager.UserManager;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

@@ -1,10 +1,10 @@
-package com.wonchiyoung.filp.server;
+package com.flipchat.server;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.wonchiyoung.filp.server.initializer.StringChannelInitializer;
+import com.flipchat.server.initializer.StringChannelInitializer;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;

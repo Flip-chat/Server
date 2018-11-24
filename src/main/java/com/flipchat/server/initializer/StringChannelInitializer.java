@@ -1,6 +1,6 @@
-package com.wonchiyoung.filp.server.initializer;
+package com.flipchat.server.initializer;
 
-import com.wonchiyoung.filp.server.handler.BasicChatServerHandler;
+import com.flipchat.server.handler.BasicChatServerHandler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

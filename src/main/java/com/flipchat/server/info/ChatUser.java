@@ -1,10 +1,10 @@
-package com.wonchiyoung.filp.server.info;
+package com.flipchat.server.info;
 
 import java.net.SocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.wonchiyoung.filp.server.env.SupportDevice;
+import com.flipchat.server.env.SupportDevice;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;

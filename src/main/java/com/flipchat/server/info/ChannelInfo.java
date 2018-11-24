@@ -1,4 +1,4 @@
-package com.wonchiyoung.filp.server.info;
+package com.flipchat.server.info;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
