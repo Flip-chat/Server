@@ -1,10 +1,9 @@
-
 buildscript {
 	repositories {
 		jcenter()
 	}
 	dependencies {
-		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
+		classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.4'
 	}
 }
 
@@ -13,44 +12,54 @@ apply plugin: 'eclipse-wtp'
 apply plugin: 'application'
 apply plugin: "com.github.johnrengelman.shadow"
 
+group = 'filp-chat'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
+compileJava.options.encoding = 'UTF-8'
+compileTestJava.options.encoding = 'UTF-8'
 
 repositories {
 	mavenCentral()
 }
 
-def libVersion = [
-	junit: '4.12',
+def libVer = [
+	junit: '5.3.2',
 	slf4j: '1.7.25',
 	logback: '1.2.3',
-	netty: '4.1.29.Final',
-	commonsLang: '3.7',
-	jacksonDatabind: '2.9.5'
+	lombok : '1.18.4',
+	netty: '4.1.33.Final',
+	commonsLang: '3.8.1'
 ];
 
 dependencies {
-	implementation "org.slf4j:slf4j-api:${libVersion.slf4j}"
-	implementation "ch.qos.logback:logback-classic:${libVersion.logback}"
-	implementation "io.netty:netty-all:${libVersion.netty}"
-	implementation "org.apache.commons:commons-lang3:${libVersion.commonsLang}"
-	implementation "com.fasterxml.jackson.core:jackson-databind:${libVersion.jacksonDatabind}"
-	implementation "com.fasterxml.jackson.core:jackson-databind:${libVersion.jacksonDatabind}"
+	annotationProcessor group: "org.projectlombok", name: "lombok", version: "${libVer.lombok}"
+
+	implementation group: "org.projectlombok", name: "lombok", version: "${libVer.lombok}"
 	
-	testImplementation "junit:junit:${libVersion.junit}"
+	implementation group: "org.slf4j", name:"slf4j-api", version:"${libVer.slf4j}"
+	implementation group: "ch.qos.logback", name:"logback-classic", version:"${libVer.logback}"
+	implementation group: "org.apache.commons", name:"commons-lang3", version:"${libVer.commonsLang}"
+	
+	implementation group: "io.netty", name:"netty-all", version:"${libVer.netty}"
+	
+	testImplementation group: "org.junit.jupiter", name: "junit-jupiter-api", version: "${libVer.junit}"
 }
 
 mainClassName = 'com.flipchat.server.FlipChatServer'
-version = '0.0.1' + '-SNAPSHOT'
 
 jar {
 	finalizedBy shadowJar
-	//baseName = project.name
+	
 	manifest {
-		attributes 'Main-Class' : mainClassName,
-				'Implementation-Title' : project.name,
-				'Implementation-Version' : version
+		attributes 'Main-Class' : "${mainClassName}",
+				'Implementation-Title' : "${rootProject.name}",
+				'Implementation-Group' : "${rootProject.group}",
+				'Implementation-Version' : "${version}",
+				'Implementation-Date' : '20190203'
 	}
+	
 	from {
 		configurations.compile.collect {
 			it.isDirectory() ? it : zipTree(it)
